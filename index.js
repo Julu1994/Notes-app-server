@@ -3,10 +3,12 @@ import { router } from "./Routes/router.js";
 import { config } from "./Config/config.js";
 import mongoose from "mongoose";
 import cors from "cors";
-
+import cookieParser from "cookie-parser";
 const app = express();
 const port = 3000;
+
 app.use(express.json());
+app.use(cookieParser());
 app.use("/", router);
 app.use(
     cors({
@@ -14,6 +16,7 @@ app.use(
         credentials: true,
     })
 );
+
 mongoose.set("strictQuery", false);
 mongoose.connect(
     config.DB_LINK,
