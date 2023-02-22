@@ -1,13 +1,13 @@
 const { Notes } = require("../Models/notesSchema");
 
-/********************************************************
+/**
  * @Add notes
  * @Route POST /
  * @description letting the users new notes.
  * @param {string} title.required >> Notes title
  * @param {string}  description.required >> Notes description
  * @returns {Object} A JSON object that shows http status codes.
- ********************************************************/
+ **/
 module.exports.addNotes = async (req, res) => {
     try {
         const { title, description } = req.body;
