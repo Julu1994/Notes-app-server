@@ -1,5 +1,14 @@
-import { Notes } from "../Models/notesSchema.js";
-export const addNotes = async (req, res) => {
+const { Notes } = require("../Models/notesSchema");
+
+/********************************************************
+ * @Add notes
+ * @Route POST /
+ * @description letting the users new notes.
+ * @param {string} title.required >> Notes title
+ * @param {string}  description.required >> Notes description
+ * @returns {Object} A JSON object that shows http status codes.
+ ********************************************************/
+module.exports.addNotes = async (req, res) => {
     try {
         const { title, description } = req.body;
         if (!title || !description) {
@@ -15,20 +24,26 @@ export const addNotes = async (req, res) => {
         const notes = await Notes.create(newNotes);
         res.json(notes);
     } catch (err) {
-        req.status(500).json({ message: "Internal server error" });
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 
-export const displayNotes = async (req, res) => {
+module.exports.displayNotes = async (req, res) => {
     try {
         const notes = await Notes.find({ user: req.user._id });
         res.json(notes);
     } catch (err) {
-        res.status(404).json({ message: "Not found data" });
+        return res.status(404).json({ message: "Not found data" });
     }
 };
-
-export const deleteNotes = async (req, res) => {
+/********************************************************
+ * @Add notes
+ * @Route POST /:id
+ * @description letting the users delete existing notes.
+ * @param {string} id.required >> Notes id
+ * @returns {Object} A JSON object that shows http status codes.
+ ********************************************************/
+module.exports.deleteNotes = async (req, res) => {
     try {
         const notesId = req.params.id;
         if (!notesId)
@@ -48,11 +63,21 @@ export const deleteNotes = async (req, res) => {
         await existingNotes.delete();
         res.json(existingNotes);
     } catch {
-        res.status(500).json({ message: "Server error" });
+        return res.status(500).json({ message: "Server error" });
     }
 };
 
-export const editNotes = async (req, res) => {
+/********************************************************
+ * @Edit notes
+ * @Route POST /:id
+ * @description letting the users edit existing notes.
+ * @param {string} id.required >> Notes id
+ * @param {string} title.required >> Notes title
+ * @param {string}  description.required >> Notes description
+ * @returns {Object} A JSON object that shows http status codes.
+ ********************************************************/
+
+module.exports.editNotes = async (req, res) => {
     try {
         const { title, description } = req.body;
         const notesId = req.params.id;

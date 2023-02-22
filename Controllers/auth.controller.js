@@ -1,14 +1,24 @@
-import { isEmailValid, isPasswordValid } from "../Helper/validation.js";
-import { User } from "../Models/userSchema.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import { config } from "../Config/config.js";
+const { isEmailValid, isPasswordValid } = require("../Helper/validation");
+const { User } = require("../Models/userSchema");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const config = require("../Config/config");
 
-export const signUp = async (req, res) => {
+/**
+ * @Register New User
+ * @Route POST /signup
+ * @description Signuping new users and adding new user to DB.
+ * @param {string} firstName.required >> User's first name
+ * @param {string} lastName.required >> User's last name
+ * @param {string} email.required >> User's email address
+ * @param {string} password.required >> User's password
+ * @param {string} confirmPassword.required >> Password confirmation
+ * @returns {Object} A JSON object that shows http status codes, saves user data to DB.
+ **/
+module.exports.signUp = async (req, res) => {
     try {
         const { firstName, lastName, email, password, confirmPassword } =
             req.body;
-        const existingEmail = await User.findOne({ email });
 
         if (!firstName || !lastName || !email || !password || !confirmPassword)
             return res.status(400).json({
@@ -31,6 +41,7 @@ export const signUp = async (req, res) => {
             return res.status(400).json({
                 errorMessage: "Password didn't match",
             });
+        const existingEmail = await User.findOne({ email });
         if (existingEmail)
             return res.status(400).json({
                 errorMessage: "This email has already been taken",
@@ -60,11 +71,21 @@ export const signUp = async (req, res) => {
         res.cookie("token", token, { httpOnly: true });
         res.status(200).json({ success: true, userPayload, token });
     } catch (err) {
-        res.status(400).json("error");
+        console.log(err);
+        res.status(400).json("error..");
     }
 };
 
-export const login = async (req, res) => {
+/********************************************************
+ * @User Login
+ * @Route POST /signup
+ * @description Login users with email and password.
+ * @param {string} email.required >> User's email
+ * @param {string} password.required >> User's password
+ * @returns {Object} A JSON object that shows http status codes, send jwt token.
+ ********************************************************/
+
+module.exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
