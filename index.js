@@ -6,12 +6,10 @@ const router = require("./Routes/router");
 const config = require("./Config/config");
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(express.json());
 app.use(cookieParser());
-
-app.use(express.json());
 app.use(
     cors({
         credentials: true,
@@ -33,7 +31,7 @@ mongoose
         console.error("DocumentDB Connection Failed:", err);
     });
 
-const PORT = process.env.PORT || port;
+const PORT = config.PORT || port;
 app.listen(PORT, () => {
     console.log(`server is up and running on port ${PORT}`);
 });

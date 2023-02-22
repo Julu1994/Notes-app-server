@@ -14,4 +14,7 @@ router.get("/", auth, displayNotes);
 router.post("/", auth, addNotes);
 router.delete("/:id", auth, deleteNotes);
 router.put("/:id", auth, editNotes);
+router.get("/test", async (req, res) => {
+    res.send("Server is up and running");
+});
 module.exports = router;
