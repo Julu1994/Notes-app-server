@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const route = require("express").Router();
 const { signUp, login } = require("../Controllers/auth.controller");
 const { auth } = require("../Middlewares/authMiddleware");
 const {
@@ -8,13 +8,10 @@ const {
     editNotes,
 } = require("../Controllers/note.controller");
 
-router.post("/signup", signUp);
-router.post("/login", login);
-router.get("/", auth, displayNotes);
-router.post("/", auth, addNotes);
-router.delete("/:id", auth, deleteNotes);
-router.put("/:id", auth, editNotes);
-router.get("/test", async (req, res) => {
-    res.send("Server is up and running");
-});
-module.exports = router;
+route.post("/auth/signup", signUp);
+route.post("/auth/login", login);
+route.get("/notes/all", auth, displayNotes);
+route.post("/create/new/notes", auth, addNotes);
+route.delete("/note/delete/:noteId", auth, deleteNotes);
+route.put("/note/edit/:noteId", auth, editNotes);
+module.exports = route;

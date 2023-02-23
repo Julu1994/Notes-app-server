@@ -45,7 +45,7 @@ module.exports.displayNotes = async (req, res) => {
  ********************************************************/
 module.exports.deleteNotes = async (req, res) => {
     try {
-        const notesId = req.params.id;
+        const notesId = req.params.noteId;
         if (!notesId)
             return res.status(404).json({
                 error: "Not found",
@@ -80,13 +80,12 @@ module.exports.deleteNotes = async (req, res) => {
 module.exports.editNotes = async (req, res) => {
     try {
         const { title, description } = req.body;
-        const notesId = req.params.id;
+        const notesId = req.params.noteId;
         if (!title && !description) {
             return res.status(400).json({
                 message: "Empty input",
             });
         }
-
         if (!notesId)
             return res.status(400).json({
                 message: "not found notes",

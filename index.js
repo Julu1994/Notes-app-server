@@ -6,19 +6,21 @@ const router = require("./Routes/router");
 const config = require("./Config/config");
 
 const app = express();
-const port = 8080;
+const port = 5000;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
+        origin: true,
         credentials: true,
     })
 );
-app.use("/", router);
+//Routes
+app.use("/api/v1", router);
 
+//Database
 mongoose.set("strictQuery", false);
-
 mongoose
     .connect(config.DB_LINK, {
         useNewUrlParser: true,
@@ -28,10 +30,6 @@ mongoose
         console.log("MongoDB Connected");
     })
     .catch((err) => {
-        console.error("DocumentDB Connection Failed:", err);
+        console.error("DB Connection Failed:", err);
     });
-
-const PORT = config.PORT || port;
-app.listen(PORT, () => {
-    console.log(`server is up and running on port ${PORT}`);
-});
+module.exports = app;

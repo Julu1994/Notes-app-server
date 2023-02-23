@@ -94,7 +94,6 @@ module.exports.login = async (req, res) => {
                 .status(400)
                 .json({ errorMessage: "Invalid credentials!" });
         }
-
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
