@@ -1,3 +1,11 @@
+/**
+@file router.js
+@description Defines all routes for the backend server application
+@requires express.Router
+@requires ../Controllers/auth.controller
+@requires ../Middlewares/authMiddleware
+@requires ../Controllers/note.controller
+*/
 const route = require("express").Router();
 const { signUp, login } = require("../Controllers/auth.controller");
 const { auth } = require("../Middlewares/authMiddleware");

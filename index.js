@@ -1,3 +1,13 @@
+/**
+@file index.js
+@description Entry point for the backend server application
+@requires express
+@requires mongoose
+@requires cookie-parser
+@requires cors
+@requires ./Routes/router
+@requires ./Config/config
+*/
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
